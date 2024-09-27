@@ -1,19 +1,25 @@
 ---
 services:
-  chromium:
-    image: lscr.io/linuxserver/chromium:latest
-    container_name: chromium
+  browser:
+#    image: lscr.io/linuxserver/firefox:latest
+#    image: lscr.io/linuxserver/chromium:latest
+    image: lscr.io/linuxserver/msedge:latest
+    container_name: browser
     security_opt:
       - seccomp:unconfined #optional
     environment:
       - PUID=1000
       - PGID=1000
-      - TZ=Etc/UTC
-      - CHROME_CLI=https://www.linuxserver.io/ #optional
+      - TZ=Europe/Madrid
+#      - FIREFOX_CLI=https://www.linuxserver.io/ #optional
+#      - CHROME_CLI=https://www.linuxserver.io/ #optional
+      - EDGE_CLI=https://www.linuxserver.io/ #optional
     volumes:
-      - /path/to/config:/config
+      - browser:/config
     ports:
 #      - 3000:3000
       - 3001:3001
-    shm_size: "1gb"
+    shm_size: "2gb"
     restart: unless-stopped
+volumes:
+  browser:
