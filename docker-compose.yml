@@ -32,9 +32,9 @@ services:
       lan_proxy:
     volumes:
       - browser:/config
-    ports:
+#    ports:
 #      - 3000:3000
-      - 443:3001
+#      - 3001:3001
     shm_size: "2gb"
     restart: unless-stopped
 networks:
