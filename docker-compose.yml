@@ -43,6 +43,9 @@ networks:
     external: true
   browser_backend:
     internal: true
+    ipam:
+     config:
+       - subnet: "10.10.15.0/24"    
   wan_browser:
     name: wan_browser
 #    external: true
