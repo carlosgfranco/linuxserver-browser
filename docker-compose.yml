@@ -1,4 +1,5 @@
----
+name: browser
+
 services:
   cf_browser:
     image: cloudflare/cloudflared 
@@ -7,8 +8,11 @@ services:
     command: tunnel run 
     environment: 
       - TUNNEL_TOKEN=eyJhIjoiOWIxZDQ0YjFkODUzYWM1NDk2ZWQ4YzNkMzc5Mzk0ZGQiLCJ0IjoiNDQyN2MxMjItM2ViNi00Yjg2LWJhMmEtYWQ3OTliM2NlNTE3IiwicyI6Ik5UUXpZMlEwTldRdFpqTXlOeTAwTXpBekxUZ3haRFl0T1RBellqQXhZVGcyTURZMyJ9
+      - IP=15
     networks:
       wan_browser:
+      browser_backend:
+        ipv4_address: 10.10.${IP}.10      
   browser:
     image: lscr.io/linuxserver/firefox:latest
 #    image: lscr.io/linuxserver/chromium:latest
@@ -24,7 +28,8 @@ services:
 #      - CHROME_CLI=https://www.linuxserver.io/ #optional
 #      - EDGE_CLI=https://www.linuxserver.io/ #optional
     networks:
-      wan_browser:
+      browser_backend:
+        ipv4_address: 10.10.${IP}.15
       lan_proxy:
     volumes:
       - browser:/config
@@ -36,6 +41,8 @@ services:
 networks:
   lan_proxy:
     name: lan_proxy
+    external: true
+  browser_backend:
     internal: true
   wan_browser:
     name: wan_browser
