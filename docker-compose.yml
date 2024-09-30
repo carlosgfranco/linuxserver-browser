@@ -39,7 +39,7 @@ networks:
     internal: true
   wan_browser:
     name: wan_browser
-    external: true
+#    external: true
 volumes:
   browser:
     name: "browser"
