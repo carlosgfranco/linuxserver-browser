@@ -1,5 +1,14 @@
 ---
 services:
+  cf_browser:
+    image: cloudflare/cloudflared 
+    container_name: cf_browser
+    restart: unless-stopped 
+    command: tunnel run 
+    environment: 
+      - TUNNEL_TOKEN=eyJhIjoiOWIxZDQ0YjFkODUzYWM1NDk2ZWQ4YzNkMzc5Mzk0ZGQiLCJ0IjoiNDQyN2MxMjItM2ViNi00Yjg2LWJhMmEtYWQ3OTliM2NlNTE3IiwicyI6Ik5UUXpZMlEwTldRdFpqTXlOeTAwTXpBekxUZ3haRFl0T1RBellqQXhZVGcyTURZMyJ9
+    networks:
+      wan_browser:
   browser:
     image: lscr.io/linuxserver/firefox:latest
 #    image: lscr.io/linuxserver/chromium:latest
@@ -14,6 +23,9 @@ services:
       - FIREFOX_CLI=https://www.linuxserver.io/ #optional
 #      - CHROME_CLI=https://www.linuxserver.io/ #optional
 #      - EDGE_CLI=https://www.linuxserver.io/ #optional
+    networks:
+      wan_browser:
+      lan_proxy:
     volumes:
       - browser:/config
     ports:
@@ -21,6 +33,13 @@ services:
       - 3001:3001
     shm_size: "2gb"
     restart: unless-stopped
+networks:
+  lan_proxy:
+    name: lan_proxy
+    internal: true
+  wan_browser:
+    name: wan_browser
+    external: true
 volumes:
   browser:
     name: "browser"
