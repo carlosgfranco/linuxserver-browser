@@ -49,3 +49,4 @@ networks:
 volumes:
   browser:
     name: "browser"
+    external: true
